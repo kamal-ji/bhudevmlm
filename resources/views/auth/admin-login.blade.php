@@ -54,7 +54,7 @@
                             @csrf
                             <div class="d-flex flex-column justify-content-lg-center p-4 p-lg-0 pb-0 flex-fill">
                                 <div class=" mx-auto mb-5 text-center">
-                                    <img src="{{get('logo_url')}}" class="img-fluid" alt="{{get('name')}}">
+                                    <img src="{{ asset('storage/' . get('company_logo')) }}" width="100" class="img-fluid" alt="{{get('name')}}">
                                 </div>
                                 <div class="card border-0 p-lg-3 shadow-lg">
                                     <div class="card-body">
@@ -69,8 +69,8 @@
                                                     <i class="isax isax-sms-notification"></i>
                                                 </span>
                                                 <input type="text" value="" class="form-control border-start-0 ps-0"
-                                                    id="username" name="username" placeholder="Enter Username">
-                                                <div class="invalid-feedback" id="usernameError"></div>
+                                                    id="email" name="email" placeholder="Enter Email">
+                                                <div class="invalid-feedback" id="emailError"></div>
                                             </div>
                                         </div>
                                         <div class="mb-3">
@@ -224,7 +224,7 @@
             $('#loginSpinner').removeClass('d-none');
 
             const deviceToken = await getDeviceToken(); // get Firebase device token
-            const username = $('input[name="username"]').val();
+            const email = $('input[name="email"]').val();
             const password = $('input[name="password"]').val();
             //const deviceToken = $('input[name="device_token"]').val() || 'web-' + Date.now();
 
@@ -238,7 +238,7 @@
                 contentType: 'application/json',
                 dataType: 'json',
                 data: JSON.stringify({
-                    username: username,
+                    email: email,
                     password: password,
                     device_token: deviceToken || 'web-' + Date.now()
                 }),

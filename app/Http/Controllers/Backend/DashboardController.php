@@ -1,38 +1,37 @@
 <?php
-
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        // Get user data from session (external API)
-        $externalUser = session('external_user');
-       
-        // You can fetch additional data from external API if needed
-        $stats = $this->getDashboardStats($externalUser['id']);
-        
+        // Get logged-in user
+        $user = Auth::user();
+
+        // Fetch dashboard stats (replace with real queries later)
+        $stats = $this->getDashboardStats($user->id);
+
         return view('backend.dashboard', [
-            'user' => $externalUser,
+            'user' => $user,
             'stats' => $stats
         ]);
     }
     
     /**
-     * Fetch dashboard stats from external API
+     * Fetch dashboard stats
      */
-    private function getDashboardStats($token)
+    private function getDashboardStats($userId)
     {
-      
-        // Return default stats if API call fails
+        // You can fetch stats from your database
         return [
-            'total_customers' => 0,
-            'total_orders' => 0,
-            'revenue' => 0,
-            'pending_orders' => 0
+            'total_customers' => 0, // Example: Customer::count()
+            'total_orders' => 0,    // Example: Order::count()
+            'revenue' => 0,         // Example: Order::sum('total')
+            'pending_orders' => 0   // Example: Order::where('status', 'pending')->count()
         ];
     }
 }

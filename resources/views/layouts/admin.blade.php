@@ -6,9 +6,9 @@
     <!-- Meta Tags -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>@yield('title', 'Invoice and Billing Management') </title>
+    <title>@yield('title', 'Bhudevmlm') </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Tiara">
+    <meta name="author" content="Bhudevmlm">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
@@ -298,115 +298,7 @@
                 });
             });
         });
-     
-           $(document).ready(function() {
-    // Click handler for Add to Cart / Remove from Cart button
-    $(document).on('click', '.applycart', function() {
-        var $this = $(this);
-        var productId = $this.data('productid');
-        var barcodeId = $this.data('barcodeid');
-        var isCart = $this.data('cart'); // Check if it's already in the cart
-       var quantity = $('#quantity').length ? $('#quantity').val() || 1 : 1;
 
-         $this.css('pointer-events', 'none');
-        $this.find('span').text('Loading...');
-        // Ajax request to either add or remove the product
-        $.ajax({
-            url: '{{ route('products.addtocart') }}',  // Laravel route to the controller
-            type: 'POST',
-            data: {
-                _token: '{{ csrf_token() }}',
-                product_id: productId,
-                barcodeid: barcodeId,
-                quantity: quantity,
-                iscart: isCart
-            },
-            success: function(response) {
-                 $this.css('pointer-events', 'auto');
-                if (response.success) {
-                    console.log(response);
-                    // Toggle the button text and cart status based on the response
-                    console.log(typeof response.cart);
-                    if (response.cart == false) {
-                        
-                        $this.data('cart', 'false');
-                        $this.removeClass('btn-soft-success').addClass('btn-soft-primary');
-                        $this.find('span').text('Add to Cart');
-                        showSuccess('Successfully removed from cart'); 
-
-                     
-                        $('.cart-counter').text(response.data.cart || '0');
-
-                    } else {
-                          $this.data('cart', 'true');
-                        $this.removeClass('btn-soft-primary').addClass('btn-soft-success');
-                        $this.find('span').text('Remove from Cart');
-                    showSuccess('Successfully added to cart');  // Show error if any
-                    
-                        $('.cart-counter').text(response.data.cart || '0');
-                    }
-                } else {
-                    showError(response.message);  // Show error if any
-                }
-            },
-            error: function() {
-                alert("An error occurred while processing your request.");
-            }
-        });
-    });
-
-     // Click handler for Add to Cart / Remove from wishlist button
-    $(document).on('click', '.applywishlist', function() {
-        var $this = $(this);
-        var productId = $this.data('productid');
-        var barcodeId = $this.data('barcodeid');
-        var isWishlist = $this.data('wishlist'); // Check if it's already in the cart
-         $this.css('pointer-events', 'none');
-        $this.find('i').replaceWith('<span class="loading-text">Loading...</span>');
-        // Ajax request to either add or remove the product
-        $.ajax({
-            url: '{{ route('products.addtowishlist') }}',  // Laravel route to the controller
-            type: 'POST',
-            data: {
-                _token: '{{ csrf_token() }}',
-                product_id: productId,
-                barcodeid: barcodeId,
-                iswishlist: isWishlist
-            },
-            success: function(response) {
-                $this.css('pointer-events', 'auto');
-                $this.find('.loading-text').replaceWith('<i class="fa ' + (response.wishlist ? 'fa-heart' : 'fa-regular fa-heart') + '"></i>');
-                if (response.success) {
-                    console.log(response);
-                    // Toggle the button text and cart status based on the response
-                    console.log(typeof response.wishlist);
-                    if (response.wishlist == false) {
-                        
-                        $this.data('wishlist', 'false');
-                        $this.find('i').removeClass('fa-heart').addClass('fa-regular fa-heart');
-                       
-                        showSuccess('Successfully removed from wishlist'); 
-                         $('.wishlist-counter').text(response.data.wishlist || '0');
-                        
-                      
-
-                    } else {
-                          $this.data('wishlist', 'true');
-                        $this.find('i').removeClass('fa-regular fa-heart').addClass('fa fa-heart');
-                    showSuccess('Successfully added to wishlist');  // Show error if any
-                     $('.wishlist-counter').text(response.data.wishlist || '0');
-                       
-                    }
-                } else {
-                    showError(response.message);  // Show error if any
-                }
-            },
-            error: function() {
-                alert("An error occurred while processing your request.");
-            }
-        });
-    });
-  });
   
         function resetLoginButton() {
             $('.submitbtn').prop('disabled', false);

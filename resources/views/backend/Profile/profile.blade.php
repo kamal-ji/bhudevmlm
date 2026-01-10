@@ -92,11 +92,15 @@
                                      <div class="d-flex align-items-center">
                                          <div class="avatar avatar-xxl border border-dashed bg-light me-3 flex-shrink-0">
                                              <div class="position-relative d-flex align-items-center">
-                                                 <img src="{{ $user['image'] ? get('image_url') . $user['image'] : asset('assets/backend/img/users/user-01.jpg') }}"
-                                                     class="avatar avatar-xl " alt="User Img">
-                                                 <a href="javascript:void(0);"
-                                                     class="rounded-trash trash-top d-flex align-items-center justify-content-center"><i
-                                                         class="isax isax-trash"></i></a>
+                                            <img src="{{ $user->image ? asset('storage/' . $user->image) : asset('assets/backend/img/users/user-01.jpg') }}"
+     class="avatar avatar-xl" alt="User Img">
+
+
+<a href="javascript:void(0);"
+   class="rounded-trash trash-top d-flex align-items-center justify-content-center">
+    <i class="isax isax-trash"></i>
+</a>
+
                                              </div>
                                          </div>
                                          <div class="d-inline-flex flex-column align-items-start">
@@ -130,7 +134,7 @@
                                          <div class="col-lg-4 col-md-6">
                                              <div class="mb-3">
                                                  <label class="form-label">Email <span class="text-danger">*</span></label>
-                                                 <input type="text" name="emailid" value="{{ $user['email'] }}"
+                                                 <input type="text" name="email" value="{{ $user['email'] }}"
                                                      class="form-control" required>
                                              </div>
                                          </div><!-- end col -->
@@ -190,13 +194,13 @@
                                              <div class="mb-3">
                                                  <label class="form-label">Address 2</label>
                                                  <input type="text" class="form-control" name="address2"
-                                                     value="{{ $user['address2'] }}" required>
+                                                     value="{{ $user['address2'] }}" >
                                              </div>
                                          </div><!-- end col -->
                                          <div class="col-md-6">
                                              <div class="mb-3">
                                                  <label class="form-label">Country</label>
-                                                 <select class="select" name="countryid" required id="country_list">
+                                                 <select class="select" name="countryid"  id="country_list">
                                                      <option value="">Select</option>
                                                      @foreach ($countries as $country)
                                                          <option value="{{ $country['id'] }}" {{ $user['countryid'] == $country['id'] ? 'selected' : '' }}>{{ $country['name'] }}</option>
